@@ -1,0 +1,18 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Appointment 
+
+<h2>Approve Appointment</h2>
+
+<div>
+    <p>Are you sure you want to approve this appointment?</p>
+
+    <form method="post" asp-action="ApproveAppointment" asp-route-AppoID="@Model.AppoID">
+        <button type="submit" class="btn btn-success">Approve</button>
+    </form>
+
+    <a asp-action="Index" class="btn btn-secondary">Back to Appointments</a>
+</div>

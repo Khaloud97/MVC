@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\CodeAcademyCoimpany.BLL\\Interfaces",
+    "\\CodeAcademyCoimpany.BLL\\Reposatory",
+    "\\CodeAcademyCompany.DAL\\Context",
+    "\\CodeAcademyCompany.DAL\\Model",
+    "\\CodeAcademyCompanySite",
+    "\\CodeAcademyCompanySite\\Controllers",
+    "\\CodeAcademyCompanySite\\ViewModels",
+    "\\CodeAcademyCompanySite\\Views",
+    "\\CodeAcademyCompanySite\\Views\\Employee"
+  ],
+  "SelectedNode": "\\CodeAcademyCompanySite\\Controllers\\HomeController.cs",
+  "PreviewInSolutionExplorer": false
+}

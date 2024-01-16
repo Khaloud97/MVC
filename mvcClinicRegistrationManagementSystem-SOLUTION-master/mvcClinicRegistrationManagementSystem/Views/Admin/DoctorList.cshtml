@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Doctor>
+
+<h2>Doctor List</h2>
+
+<div>
+    <!-- add Doctor -->
+    <a asp-action="AddDoctor" class="btn btn-primary">Add Doctor</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>DoctorID</th>
+            <th>Name</th>
+           
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var doctor in Model)
+        {
+            <tr>
+                <td>@doctor.DoctorId</td>
+                <td>@doctor.DoctorName</td>
+               
+                <td>
+                    <a asp-action="EditDoctor" asp-route-doctorId="@doctor.DoctorId">Edit</a> |
+                    <form asp-action="DeleteDoctor" asp-route-doctorId="@doctor.DoctorId" method="post" onsubmit="return confirm('Are you sure you want to delete this doctor?');">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-dark"> Back to Doctor Page</a>

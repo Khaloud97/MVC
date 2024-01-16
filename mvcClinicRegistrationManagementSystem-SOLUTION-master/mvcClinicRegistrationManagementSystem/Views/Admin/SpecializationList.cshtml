@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<style>
+    body {
+        background: #365486;
+        text-align: center;
+    }
+</style>
+
+
+
+
+@model List<Specialization>
+
+<h2>Specialization List:</h2>
+
+<div>
+    <!-- add Specialization -->
+    <a asp-action="AddSpecialization" class="btn btn-primary">Add Specialization</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>SpecializationID</th>
+            <th>SpecializationName</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var specialization in Model)
+        {
+            <tr>
+                <td>@specialization.SpecializationsID</td>
+                <td>@specialization.SpecializationName</td>
+                <td>@specialization.Description</td>
+
+                <!-- Athe Actions: -->
+                <td>
+                    <a asp-action="EditSpecialization" asp-route-specializationId="@specialization.SpecializationsID"> <button type="submit">Edit</button></a> |
+                    <form asp-action="DeleteSpecialization" asp-route-specializationId="@specialization.SpecializationsID" method="post" onsubmit="return confirm('Are you sure you want to delete this specialization?');">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+           
+            
+        }
+  
+    </tbody>
+</table>
+<a asp-action="Index" class="btn btn-dark"> Back to Admin Page</a>

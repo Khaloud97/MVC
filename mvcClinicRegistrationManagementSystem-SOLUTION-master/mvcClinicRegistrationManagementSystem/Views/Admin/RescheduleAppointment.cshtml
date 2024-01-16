@@ -1,0 +1,21 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Appointment  
+
+<h2>Reschedule Appointment</h2>
+
+<div>
+    <p>Enter the new date and time for the appointment:</p>
+
+    <form method="post" asp-action="RescheduleAppointment" asp-route-AppoID="@Model.AppoID">
+        <label>New Date:</label>
+        <input type="datetime-local" name="newDateTime" required />
+
+        <button type="submit" class="btn btn-primary">Reschedule</button>
+    </form>
+
+    <a asp-action="Index" class="btn btn-secondary">Back to Appointments</a>
+</div>

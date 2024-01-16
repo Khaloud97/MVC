@@ -1,0 +1,22 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Specialization
+
+<h2>Edit Specialization</h2>
+
+<form asp-action="EditSpecialization" asp-route-specializationId="@Model.SpecializationsID" method="post">
+   
+    <label asp-for="SpecializationName">Specialization Name:</label>
+    <input asp-for="SpecializationName" class="form-control" />
+
+    <label asp-for="Description">Description:</label>
+    <input asp-for="Description" class="form-control" />
+    
+
+    <button type="submit">Save Changes</button> ||
+    <a asp-action="SpecializationList" class="btn btn-dark"> Back to Specialization List</a>
+
+</form>
