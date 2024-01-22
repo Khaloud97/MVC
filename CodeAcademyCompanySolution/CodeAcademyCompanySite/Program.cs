@@ -36,8 +36,8 @@ namespace CodeAcademyCompanySite
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(option=>{
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)//AuthenticationScheme use to encrepte 
+				.AddCookie(option=>{
                     option.LoginPath = "Account/Login";
 
                     option.AccessDeniedPath = "Home/Erorr";
@@ -61,6 +61,7 @@ namespace CodeAcademyCompanySite
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

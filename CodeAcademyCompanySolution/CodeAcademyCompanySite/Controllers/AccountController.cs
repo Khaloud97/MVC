@@ -68,8 +68,8 @@ namespace CodeAcademyCompany.PL.Controllers
                 {
                     var flag = await _userManager.CheckPasswordAsync(user, model.Password);
                     if (flag)
-                    {
-                         var reselt = await _signinManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+					{                      //ginerate Token
+						var reselt = await _signinManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
                         if (reselt.Succeeded) { 
                             return RedirectToAction("Index", "Employee"); 
                         }
