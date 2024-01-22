@@ -17,9 +17,15 @@ namespace CodeAcademyCompanySite
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews();//this mean if i want To use MVC 
 
-            builder.Services.AddDbContext<ApplicationDbContext>(
+			//==================================
+			//builder.Services.AddEndpointsApiExplorer(); //this mean if i want To use API 
+			//builder.Services.AddMvc(); //this mean if i want both API and MVC
+			//==================================
+
+
+			builder.Services.AddDbContext<ApplicationDbContext>(
             options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
             );
             builder.Services.AddAutoMapper(m=>m.AddProfile(new EmployeeProfile()));
