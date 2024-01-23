@@ -7,14 +7,14 @@ namespace CodeAcademyCompany.PL.Controllers
 {
     public class AccountController : Controller
     {
-		private readonly UserManager<ApplicationUser>  _userManager;
-		private readonly SignInManager<ApplicationUser> _signinManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signinManager;
 
-		public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signinManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signinManager)
         {
-			_userManager = userManager;
-			_signinManager = signinManager;
-		}
+            _userManager = userManager;
+            _signinManager = signinManager;
+        }
         #region Register
         public IActionResult Register()
         {
@@ -22,31 +22,32 @@ namespace CodeAcademyCompany.PL.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVm model)
-        { 
-			if (ModelState.IsValid)
+        {
+            if (ModelState.IsValid)
             {
                 var User = new ApplicationUser()
-                { UserName = model.Email.Split('@')[0],
-                    Fname = model.Fname ,
-                    Lname = model.Lname ,
+                {
+                    UserName = model.Email.Split('@')[0],
+                    Fname = model.Fname,
+                    Lname = model.Lname,
                     //UserName = model.Fname + model.Lname ,
-                    Email = model.Email ,
+                    Email = model.Email,
 
                 };
                 var result = await _userManager.CreateAsync(User, model.Password);
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
-                      return  RedirectToAction("Login");  
+                    return RedirectToAction("Login");
                 }
                 else
                 {
-                    foreach(var err in result.Errors)
+                    foreach (var err in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, err.Description);
                     }
                 }
 
-                
+
             }
 
             return View(model);
@@ -59,35 +60,79 @@ namespace CodeAcademyCompany.PL.Controllers
             return View();
         }
         [HttpPost]
-		public async Task<IActionResult> Login(LoginVM model)
-		{
+        public async Task<IActionResult> Login(LoginVM model)
+        {
             if (ModelState.IsValid)
             {
-                var user =await _userManager .FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user is not null)
                 {
                     var flag = await _userManager.CheckPasswordAsync(user, model.Password);
                     if (flag)
-					{                      //ginerate Token
-						var reselt = await _signinManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
-                        if (reselt.Succeeded) { 
-                            return RedirectToAction("Index", "Employee"); 
+                    {                      //ginerate Token
+                        var reselt = await _signinManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+                        if (reselt.Succeeded)
+                        {
+                            return RedirectToAction("Index", "Employee");
                         }
-                            
+
                     }
                     else
                     {
                         ModelState.AddModelError(string.Empty, "Password not valid");
 
-					}
+                    }
                 }
-				ModelState.AddModelError(string.Empty, "Email not valid ");
+                ModelState.AddModelError(string.Empty, "Email not valid ");
+
+            }
+            return View(model);
+        }
+
+        #endregion
+
+        #region ForgotPassword
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(string Email)
+        {
+            if (ModelState.IsValid)                                                                                                                  
+            {
+                var user = await _userManager.FindByEmailAsync(Email);
+                if (user is not null)
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var resetLink = Url.Action("ResetPassword","Account", new {email=user.Email,token=token},Request.Scheme);
+                    var em = new Email()
+                    {
+                        To = user.Email,
+                        Title = "Reset Password",
+						// Body = "Yor Link Here !"
+						Body= resetLink
+
+					};
+                    return RedirectToAction("Eamil Send");
+                   
+                }
+				ModelState.AddModelError(string.Empty, "User not fund ");
+
 
 			}
-			return View(model);
+			ModelState.AddModelError(string.Empty, "Email not valid");
+			return View(Email);
 		}
+        #endregion
 
-		#endregion
-
-	}
+        public IActionResult EmailSent() {
+            return View();
+        }
+    }
 }
+    
+
+
